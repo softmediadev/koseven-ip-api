@@ -1,4 +1,4 @@
-## ip-api for Kohana
+## ip-api for Kohana v3.3.x
 
 #### Installation
 
