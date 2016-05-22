@@ -1,29 +1,30 @@
 <?php defined('SYSPATH') or die('No direct scrvaluet access.');
 
-class Kohana_IpApi {
+class Kohana_IpApi
+{
 
-	protected $value;
-    protected $url;
-	protected $format;
-	protected $language;
-	protected $fields = array();
-	protected $default = array();
+	protected     $value;
+	protected     $url;
+	protected     $format;
+	protected     $language;
+	protected     $fields  = array();
+	protected     $default = array();
 	public static $error;
 
-    public static function instance($value = NULL, array $options = NULL)
-    {
-        return new self($value, $options);
-    }
+	public static function instance($value = NULL, array $options = NULL)
+	{
+		return new self($value, $options);
+	}
 
-    public function __construct($value = NULL, array $options = NULL)
-    {
+	public function __construct($value = NULL, array $options = NULL)
+	{
 		$this->value = $value;
 
 		if ( ! is_array($options))
 			$options = array();
 
 		$localhost = array('127.0.0.1', '::1');
-		$config = Kohana::$config->load('ip-api')->as_array();
+		$config    = Kohana::$config->load('ip-api')->as_array();
 
 		$config = Arr::merge($config, $options);
 
@@ -37,7 +38,7 @@ class Kohana_IpApi {
 		$this->url      = rtrim($config['protocol'].'://'.$config['host'], '/').'/';
 		$this->format   = $config['format'];
 		$this->default  = $config['default'];
-    }
+	}
 
 	public function request()
 	{
@@ -52,8 +53,8 @@ class Kohana_IpApi {
 
 		try {
 			$result = Request::factory($url)
-					->method(Request::GET)
-					->headers('Content-Type', File::mime_by_ext($this->format));
+				->method(Request::GET)
+				->headers('Content-Type', File::mime_by_ext($this->format));
 
 			foreach($params as $k => $v)
 			{
@@ -65,8 +66,7 @@ class Kohana_IpApi {
 
 			$result = $result->execute();
 
-			if ($this->format == 'json')
-			{
+			if ($this->format == 'json') {
 				$result = json_decode($result);
 
 				if ($result->status == 'fail')
