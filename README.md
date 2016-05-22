@@ -124,6 +124,6 @@ You can go to http://ip-api.com/docs/ and read the full documentation.
 
 Copyright (c) 2016, Soft Media Development. All right reserved. Website: www.smd.com.pa
 
-This project is using IP Geolocation API from http://ip-api.com created by Vlad.
+This project is using **IP Geolocation API** from http://ip-api.com created by Vlad.
 
 This project is made under BSD license. See LICENSE file for more information.
