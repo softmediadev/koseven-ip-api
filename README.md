@@ -105,7 +105,7 @@ stdClass Object
 ```
 
 #### Localization
-Localized city, regionName and country are automatically translated in many languages.  Currently support:
+City, regionName and country are automatically translated in many languages. Currently support:
 
 | Language      | Description            |
 | ------------- |:----------------------:|
