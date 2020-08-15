@@ -9,7 +9,6 @@ class Kohana_IpApi
 	protected     $language;
 	protected     $fields  = array();
 	protected     $default = array();
-	public static $error;
 
 	public static function instance($value = NULL, array $options = NULL)
 	{
@@ -28,26 +27,25 @@ class Kohana_IpApi
 
 		$config = Arr::merge($config, $options);
 
-		if (empty($this->value))
-			$this->value = Request::$client_ip;
-
 		if (in_array($this->value, $localhost))
 			$this->value = '';
 
 		$this->language = $config['language'];
-		$this->url      = rtrim($config['protocol'].'://'.$config['host'], '/').'/';
+		$this->url      = rtrim($config['host'], '/').'/';
 		$this->format   = $config['format'];
 		$this->default  = $config['default'];
 	}
 
 	public function request()
 	{
+		$result = array();
 		$params = array();
 
 		if ( ! empty($this->language))
 			$params['lang'] = $this->language;
 
 		$params['fields'] = empty($this->fields) ? $this->default : $this->fields;
+		$params['fields'] = Arr::merge(array('status', 'message'), $params['fields']);
 
 		$url = $this->url.rtrim($this->format, '/').'/'.$this->value;
 
@@ -66,17 +64,13 @@ class Kohana_IpApi
 
 			$result = $result->execute();
 
-			if ($this->format == 'json') {
+			if ($this->format == 'json')
 				$result = json_decode($result);
-
-				if ($result->status == 'fail')
-					$result = '';
-			}
 		} catch (Exception $e) {
-			self::$error = $e->getMessage();
+			Log::instance()->add(Log::ERROR, $e->getMessage())->write();
 		}
 
-		if (empty($result))
+		if (empty((array) $result))
 			return (object) array_map(function(){}, array_flip($params['fields']));
 		else
 			return $result;

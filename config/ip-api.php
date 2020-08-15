@@ -2,9 +2,8 @@
 
 return array
 (
-	'protocol' => 'http',
-	'host' => 'ip-api.com',
+	'host' => 'http://ip-api.com',
 	'format' => 'json',
 	'language' => I18n::$lang,
-	'default' => array('country', 'countryCode', 'region', 'regionName', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'org', 'as', 'query', 'status', 'message')
+	'default' => array('country', 'countryCode', 'region', 'regionName', 'city', 'zip', 'lat', 'lon', 'timezone', 'isp', 'org', 'as', 'query')
 );
