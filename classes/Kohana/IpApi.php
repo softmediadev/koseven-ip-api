@@ -38,7 +38,6 @@ class Kohana_IpApi
 
 	public function request()
 	{
-		$result = array();
 		$params = array();
 
 		if ( ! empty($this->language))
@@ -67,6 +66,7 @@ class Kohana_IpApi
 			if ($this->format == 'json')
 				$result = json_decode($result);
 		} catch (Exception $e) {
+			$result = [];
 			Log::instance()->add(Log::ERROR, $e->getMessage())->write();
 		}
 
